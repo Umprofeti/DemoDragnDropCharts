@@ -12,8 +12,9 @@ services:
     command: sh -c "yarn install && yarn dev"
     depends_on:
       - mongo
-    env_file:
-      - .env
+    environment:
+      DATABASE_URI: mongodb://<User>:<Pass>@mongo/DragNDrop?authSource=admin
+      PAYLOAD_SECRET: <TuCodigoSecreto>
 
   mongo:
     image: mongo:latest
@@ -21,6 +22,9 @@ services:
       - '27017:27017'
     command:
       - --storageEngine=wiredTiger
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: <User>
+      MONGO_INITDB_ROOT_PASSWORD: <Pass>
     volumes:
       - data:/data/db
     logging:
